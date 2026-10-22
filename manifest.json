@@ -1,0 +1,26 @@
+{
+  "name": "Escape del Colegio",
+  "short_name": "Escape Colegio",
+  "description": "Juego educativo de preguntas para tercer, cuarto y quinto grado. Explora el colegio, responde retos y consigue las 4 llaves para escapar.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0f1b3a",
+  "theme_color": "#0f1b3a",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f1b3a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Escape Colegio">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512.png">
+  <meta name="description" content="Escape del Colegio: juego educativo de preguntas para tercer, cuarto y quinto grado.">
+  <title>Escape del Colegio | Juego educativo</title>
+  <link rel="stylesheet" href="./estilos.css">
+  <script src="./juego.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">🎒</div>
+        <div><p class="eyebrow">MISIÓN EDUCATIVA</p><h1>Escape <span>del Colegio</span></h1></div>
+      </div>
+      <button id="btnSonido" class="icon-btn" type="button" aria-pressed="false" title="Activar o desactivar sonidos">🔇 Sonido</button>
+    </header>
+
+    <main>
+      <section id="pantallaInicio" class="hero panel">
+        <div class="hero-copy">
+          <span class="pill">🎮 AVENTURA • APRENDIZAJE • RETOS</span>
+          <h2>¿Podrás encontrar la salida?</h2>
+          <p>Explora el colegio, supera retos de cada materia y consigue las cuatro llaves para escapar. ¡Cada respuesta correcta te acerca a la victoria!</p>
+          <div class="setup-row">
+            <label for="grado">Selecciona tu grado</label>
+            <select id="grado">
+              <option value="3">3.º grado</option>
+              <option value="4">4.º grado</option>
+              <option value="5">5.º grado</option>
+            </select>
+          </div>
+          <button id="btnComenzar" class="primary-btn" type="button">Comenzar aventura <span>→</span></button>
+          <p class="small-note">En computadora usa WASD o las flechas. En móvil usa los controles táctiles.</p>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="sun"></div><div class="school">🏫</div><div class="floating f1">📚</div><div class="floating f2">🗝️</div><div class="floating f3">⭐</div>
+          <div class="art-caption">4 SALONES · 4 LLAVES · 1 SALIDA</div>
+        </div>
+      </section>
+
+      <section id="pantallaJuego" class="game-layout hidden">
+        <div class="game-main panel">
+          <div class="game-heading">
+            <div><p class="eyebrow">TU AVENTURA</p><h2>Explora el colegio</h2></div>
+            <button id="btnPausar" class="secondary-btn" type="button">⏸ Pausar</button>
+          </div>
+          <div class="stats">
+            <div class="stat"><span class="stat-icon">⭐</span><div><small>PUNTOS</small><strong id="puntos">0</strong></div></div>
+            <div class="stat"><span class="stat-icon">🗝️</span><div><small>LLAVES</small><strong id="llaves">0 / 4</strong></div></div>
+            <div class="stat"><span class="stat-icon">📘</span><div><small>GRADO</small><strong id="gradoActual">3.º</strong></div></div>
+          </div>
+          <div class="canvas-frame"><canvas id="juego" width="960" height="640" aria-label="Mapa interactivo del colegio"></canvas></div>
+          <div class="game-footer">
+            <p id="estado" role="status">¡Prepárate para comenzar!</p>
+            <button id="btnInteractuar" class="interact-btn" type="button">✋ Interactuar</button>
+          </div>
+          <div class="touch-area" aria-label="Controles táctiles">
+            <div class="touch-controls">
+              <button type="button" data-dir="up" aria-label="Mover arriba">▲</button>
+              <button type="button" data-dir="left" aria-label="Mover izquierda">◀</button>
+              <button type="button" data-dir="down" aria-label="Mover abajo">▼</button>
+              <button type="button" data-dir="right" aria-label="Mover derecha">▶</button>
+            </div>
+            <p class="touch-hint">Usa las flechas para moverte y el botón verde para entrar a un salón.</p>
+          </div>
+        </div>
+        <aside class="side-panel">
+          <div class="panel mission-card">
+            <p class="eyebrow">OBJETIVO</p><h3>Consigue las 4 llaves</h3>
+            <p>Responde correctamente los retos de cada salón. Después ve a la puerta de salida.</p>
+            <div class="key-list">
+              <div class="key-item" id="key-Matemáticas"><span>➗</span><div><strong>Matemáticas</strong><small>Salón 1</small></div><b>🔒</b></div>
+              <div class="key-item" id="key-Lenguaje"><span>📖</span><div><strong>Lenguaje</strong><small>Salón 2</small></div><b>🔒</b></div>
+              <div class="key-item" id="key-Ciencias"><span>🧪</span><div><strong>Ciencias</strong><small>Salón 3</small></div><b>🔒</b></div>
+              <div class="key-item" id="key-Estudios Sociales"><span>🌎</span><div><strong>Estudios Sociales</strong><small>Salón 4</small></div><b>🔒</b></div>
+            </div>
+          </div>
+          <div class="panel tip-card"><span class="tip-icon">💡</span><div><h3>Consejo</h3><p>Acércate al centro de un salón y pulsa <b>Interactuar</b>. Cada salón te presenta 5 preguntas elegidas de su banco.</p></div></div>
+          <button id="btnReiniciar" class="secondary-btn full-btn" type="button">↻ Reiniciar partida</button>
+          <button id="btnInicio" class="text-btn full-btn" type="button">← Volver al inicio</button>
+        </aside>
+      </section>
+    </main>
+    <footer><span>ESCAPE DEL COLEGIO</span><span>Hecho para aprender jugando · Funciona sin conexión</span></footer>
+  </div>
+
+  <div id="modalPregunta" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="materia">
+    <div class="modal-card quiz-card">
+      <div class="modal-top"><span id="materiaIcon" class="modal-icon">📘</span><span id="progreso" class="pill">Pregunta 1 de 5</span><button id="btnCerrarQuiz" class="close-btn" type="button" aria-label="Cerrar">×</button></div>
+      <p class="eyebrow">RETO DEL SALÓN</p><h2 id="materia">Materia</h2>
+      <div class="progress-track"><div id="barraProgreso"></div></div>
+      <p id="pregunta" class="question-text">Pregunta...</p>
+      <div id="respuestas" class="answers"></div>
+      <p id="resultado" class="feedback" aria-live="polite"></p>
+      <button id="btnSiguiente" class="primary-btn full-btn" type="button" disabled>Siguiente pregunta →</button>
+    </div>
+  </div>
+
+  <div id="modalMensaje" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="mensajeTitulo">
+    <div class="modal-card message-card">
+      <div id="mensajeEmoji" class="big-emoji">🎉</div><p class="eyebrow">MENSAJE DE MISIÓN</p><h2 id="mensajeTitulo">¡Muy bien!</h2>
+      <p id="mensajeTexto">Texto del mensaje</p>
+      <button id="btnCerrarMensaje" class="primary-btn full-btn" type="button">Continuar</button>
+    </div>
+  </div>
+  <script>
+    // Registrar Service Worker para que funcione offline y reciba actualizaciones
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js")
+          .then(() => console.log("Service Worker registrado"))
+          .catch((err) => console.log("Error al registrar SW:", err));
+      });
+    }
+  </script>
+</body>
+</html>
